@@ -1,0 +1,33 @@
+{
+  "name": "@begin/validator",
+  "version": "0.0.1",
+  "description": "Validate request bodies of JSON or x-url-form-encoded content-type",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beginner-corp/validator.git"
+  },
+  "keywords": [
+    "validate",
+    "schema",
+    "json",
+    "validation"
+  ],
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/beginner-corp/validator/issues"
+  },
+  "homepage": "https://github.com/beginner-corp/validator#readme",
+  "dependencies": {
+    "jsonschema": "^1.4.1"
+  },
+  "devDependencies": {
+    "tap-arc": "^0.3.4",
+    "tape": "^5.5.3"
+  }
+}
