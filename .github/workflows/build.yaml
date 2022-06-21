@@ -79,11 +79,6 @@ jobs:
       - name: Install
         run: npm install
 
-      - name: Prepare
-        run: npm run prepare
-        env:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-
       # Publish to npm
       - name: Publish @RC to npm
         if: contains(github.ref, 'RC')
