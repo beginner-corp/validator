@@ -1,6 +1,6 @@
-export default function isJSON(req) {
-    let contentType = req.headers['Content-Type'] ||
+export default function isJSON (req) {
+  let contentType = req.headers['Content-Type'] ||
         req.headers['content-type']
 
-    return /application\/json/ig.test(contentType)
+  return /application\/json/ig.test(contentType)
 }

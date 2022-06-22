@@ -5,7 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "lint": "eslint . --fix",
+    "test": "npm run lint && npm run test:integration",
+    "test:integration": "tape 'test/**/*-test.js' | tap-arc"
   },
   "repository": {
     "type": "git",
@@ -27,7 +29,15 @@
     "jsonschema": "^1.4.1"
   },
   "devDependencies": {
+    "@architect/eslint-config": "^2.0.1",
+    "eslint": "^8.18.0",
     "tap-arc": "^0.3.4",
     "tape": "^5.5.3"
+  },
+  "eslintConfig": {
+    "extends": "@architect/eslint-config",
+    "parserOptions": {
+      "sourceType": "module"
+    }
   }
 }
