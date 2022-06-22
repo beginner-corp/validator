@@ -5,12 +5,12 @@ export default function formEncodingToSchema (obj, schema) {
       obj[prop] = parseInt(obj[prop])
     }
     else if (type === 'boolean') {
-      obj[prop] = obj[prop] === 'on' ? true : false
+      obj[prop] = obj[prop] === 'on' || obj[prop] === true ? true : false
     }
     else if (type === 'object') {
       obj[prop] = {}
       Object.keys(schema.properties[prop]?.properties).forEach(innerProp => {
-        obj[prop][innerProp] = obj[innerProp]
+        obj[prop][innerProp] = obj[innerProp] || ''
         delete obj[innerProp]
       })
     }
