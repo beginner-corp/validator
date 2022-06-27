@@ -5,7 +5,7 @@ import Book from './schemas/book.js'
 import Person from './schemas/person.js'
 
 test('formEncodingToSchema - Book schema', async t => {
-  t.plan(3)
+  t.plan(4)
 
   t.deepEqual(formEncodingToSchema({
     title: 'Modern Software Engineering',
@@ -34,6 +34,15 @@ test('formEncodingToSchema - Book schema', async t => {
     title: 'Modern Software Engineering',
     publication_date: 2021
   }, 'no author')
+
+  t.deepEqual(formEncodingToSchema({
+    title: 'Modern Software Engineering',
+    author: 'Dave Farley',
+    publication_date: ''
+  }, Book), {
+    title: 'Modern Software Engineering',
+    author: 'Dave Farley'
+  }, 'integer is empty string')
 
 })
 
