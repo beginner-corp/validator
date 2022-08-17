@@ -6,7 +6,7 @@ import Book from './schemas/book.js'
 test('isValid', async t => {
   t.plan(2)
 
-  let valid = validator({
+  let result = validator({
     headers: {
       'Content-Type': 'application/json'
     },
@@ -16,9 +16,9 @@ test('isValid', async t => {
       publication_date: 2021
     }
   }, Book)
-  t.equal(valid.res.valid, true, 'valid input')
+  t.equal(result.valid, true, 'valid input')
 
-  valid = validator({
+  result = validator({
     headers: {
       'Content-Type': 'application/x-url-form-encoding'
     },
@@ -28,6 +28,6 @@ test('isValid', async t => {
       publication_date: 'not a year'
     }
   }, Book)
-  t.equal(valid.res.valid, false, 'invalid input')
+  t.equal(result.valid, false, 'invalid input')
 
 })
