@@ -28,10 +28,8 @@ function convertExtend (arr, obj) {
   return obj
 }
 
-export default function convertToSchema (data) {
+export default function convertToNestedObject (data) {
   let obj = {}
-  console.log(data)
-  let entries = Object.entries(data)
-  entries.forEach(entry => convertExtend(entry, obj))
+  Object.entries(data).forEach(entry => convertExtend(entry, obj))
   return obj
 }

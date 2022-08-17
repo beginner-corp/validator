@@ -1,5 +1,5 @@
 import { test } from 'tape'
-import convertToSchema from '../src/convert-to-schema.js'
+import convertToNestedObject from '../src/convert-to-nested-object.js'
 import formEncodingToSchema from '../src/form-encoding-to-schema.js'
 
 import Book from './schemas/book.js'
@@ -8,7 +8,7 @@ import Person from './schemas/person.js'
 test('formEncodingToSchema - Book schema', async t => {
   t.plan(4)
 
-  let obj = convertToSchema({
+  let obj = convertToNestedObject({
     title: 'Modern Software Engineering',
     author: 'Dave Farley',
     publication_date: '2021'
@@ -19,7 +19,7 @@ test('formEncodingToSchema - Book schema', async t => {
     publication_date: 2021
   }, 'all props strings')
 
-  obj = convertToSchema({
+  obj = convertToNestedObject({
     title: 'Modern Software Engineering',
     author: 'Dave Farley',
     publication_date: 2021
@@ -30,7 +30,7 @@ test('formEncodingToSchema - Book schema', async t => {
     publication_date: 2021
   }, 'one integer prop')
 
-  obj = convertToSchema({
+  obj = convertToNestedObject({
     title: 'Modern Software Engineering',
     publication_date: '2021'
   })
@@ -39,7 +39,7 @@ test('formEncodingToSchema - Book schema', async t => {
     publication_date: 2021
   }, 'no author')
 
-  obj = convertToSchema({
+  obj = convertToNestedObject({
     title: 'Modern Software Engineering',
     author: 'Dave Farley',
     publication_date: ''
@@ -54,7 +54,7 @@ test('formEncodingToSchema - Book schema', async t => {
 test('formEncodingToSchema - Person schema', async t => {
   t.plan(5)
 
-  let obj = convertToSchema({
+  let obj = convertToNestedObject({
     firstName: 'Guy',
     lastName: 'Incognito',
     age: '20',
@@ -75,7 +75,7 @@ test('formEncodingToSchema - Person schema', async t => {
     committer: false,
   }, 'all props strings')
 
-  obj = convertToSchema({
+  obj = convertToNestedObject({
     firstName: 'Guy',
     lastName: 'Incognito',
     age: '20',
@@ -106,7 +106,7 @@ test('formEncodingToSchema - Person schema', async t => {
     }
   }, 'sub object strings')
 
-  obj = convertToSchema({
+  obj = convertToNestedObject({
     firstName: 'Guy',
     lastName: 'Incognito',
     age: 20,
@@ -127,7 +127,7 @@ test('formEncodingToSchema - Person schema', async t => {
     committer: false,
   }, 'some integer props')
 
-  obj = convertToSchema({
+  obj = convertToNestedObject({
     firstName: 'Guy',
     lastName: 'Incognito',
     age: 20,
@@ -148,7 +148,7 @@ test('formEncodingToSchema - Person schema', async t => {
     committer: false,
   }, 'false boolean props')
 
-  obj = convertToSchema({
+  obj = convertToNestedObject({
     firstName: 'Guy',
     lastName: 'Incognito',
     age: 20,
