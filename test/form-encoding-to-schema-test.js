@@ -1,4 +1,5 @@
 import { test } from 'tape'
+import convertToSchema from '../src/convert-to-schema.js'
 import formEncodingToSchema from '../src/form-encoding-to-schema.js'
 
 import Book from './schemas/book.js'
@@ -7,39 +8,43 @@ import Person from './schemas/person.js'
 test('formEncodingToSchema - Book schema', async t => {
   t.plan(4)
 
-  t.deepEqual(formEncodingToSchema({
+  let obj = convertToSchema({
     title: 'Modern Software Engineering',
     author: 'Dave Farley',
     publication_date: '2021'
-  }, Book), {
+  })
+  t.deepEqual(formEncodingToSchema(obj, Book), {
     title: 'Modern Software Engineering',
     author: 'Dave Farley',
     publication_date: 2021
   }, 'all props strings')
 
-  t.deepEqual(formEncodingToSchema({
+  obj = convertToSchema({
     title: 'Modern Software Engineering',
     author: 'Dave Farley',
     publication_date: 2021
-  }, Book), {
+  })
+  t.deepEqual(formEncodingToSchema(obj, Book), {
     title: 'Modern Software Engineering',
     author: 'Dave Farley',
     publication_date: 2021
   }, 'one integer prop')
 
-  t.deepEqual(formEncodingToSchema({
+  obj = convertToSchema({
     title: 'Modern Software Engineering',
     publication_date: '2021'
-  }, Book), {
+  })
+  t.deepEqual(formEncodingToSchema(obj, Book), {
     title: 'Modern Software Engineering',
     publication_date: 2021
   }, 'no author')
 
-  t.deepEqual(formEncodingToSchema({
+  obj = convertToSchema({
     title: 'Modern Software Engineering',
     author: 'Dave Farley',
     publication_date: ''
-  }, Book), {
+  })
+  t.deepEqual(formEncodingToSchema(obj, Book), {
     title: 'Modern Software Engineering',
     author: 'Dave Farley'
   }, 'integer is empty string')
@@ -49,7 +54,7 @@ test('formEncodingToSchema - Book schema', async t => {
 test('formEncodingToSchema - Person schema', async t => {
   t.plan(5)
 
-  t.deepEqual(formEncodingToSchema({
+  let obj = convertToSchema({
     firstName: 'Guy',
     lastName: 'Incognito',
     age: '20',
@@ -58,7 +63,8 @@ test('formEncodingToSchema - Person schema', async t => {
     dateOfBirth: '2022-06-22',
     rating: '1',
     committer: 'false',
-  }, Person), {
+  })
+  t.deepEqual(formEncodingToSchema(obj, Person), {
     firstName: 'Guy',
     lastName: 'Incognito',
     age: 20,
@@ -67,15 +73,9 @@ test('formEncodingToSchema - Person schema', async t => {
     dateOfBirth: '2022-06-22',
     rating: 1,
     committer: false,
-    address: {
-      city: '',
-      postalCode: '',
-      street: '',
-      streetnumber: '',
-    }
   }, 'all props strings')
 
-  t.deepEqual(formEncodingToSchema({
+  obj = convertToSchema({
     firstName: 'Guy',
     lastName: 'Incognito',
     age: '20',
@@ -84,11 +84,12 @@ test('formEncodingToSchema - Person schema', async t => {
     dateOfBirth: '2022-06-22',
     rating: '1',
     committer: 'false',
-    city: 'Nowhere',
-    postalCode: '90210',
-    street: 'Bayside Cres.',
-    streetnumber: '70',
-  }, Person), {
+    'address.city': 'Nowhere',
+    'address.postalCode': '90210',
+    'address.street': 'Bayside Cres.',
+    'address.streetnumber': '70',
+  })
+  t.deepEqual(formEncodingToSchema(obj, Person), {
     firstName: 'Guy',
     lastName: 'Incognito',
     age: 20,
@@ -105,7 +106,7 @@ test('formEncodingToSchema - Person schema', async t => {
     }
   }, 'sub object strings')
 
-  t.deepEqual(formEncodingToSchema({
+  obj = convertToSchema({
     firstName: 'Guy',
     lastName: 'Incognito',
     age: 20,
@@ -114,7 +115,8 @@ test('formEncodingToSchema - Person schema', async t => {
     dateOfBirth: '2022-06-22',
     rating: 1,
     committer: 'false',
-  }, Person), {
+  })
+  t.deepEqual(formEncodingToSchema(obj, Person), {
     firstName: 'Guy',
     lastName: 'Incognito',
     age: 20,
@@ -123,15 +125,9 @@ test('formEncodingToSchema - Person schema', async t => {
     dateOfBirth: '2022-06-22',
     rating: 1,
     committer: false,
-    address: {
-      city: '',
-      postalCode: '',
-      street: '',
-      streetnumber: '',
-    }
   }, 'some integer props')
 
-  t.deepEqual(formEncodingToSchema({
+  obj = convertToSchema({
     firstName: 'Guy',
     lastName: 'Incognito',
     age: 20,
@@ -140,7 +136,8 @@ test('formEncodingToSchema - Person schema', async t => {
     dateOfBirth: '2022-06-22',
     rating: 1,
     committer: false,
-  }, Person), {
+  })
+  t.deepEqual(formEncodingToSchema(obj, Person), {
     firstName: 'Guy',
     lastName: 'Incognito',
     age: 20,
@@ -149,15 +146,9 @@ test('formEncodingToSchema - Person schema', async t => {
     dateOfBirth: '2022-06-22',
     rating: 1,
     committer: false,
-    address: {
-      city: '',
-      postalCode: '',
-      street: '',
-      streetnumber: '',
-    }
   }, 'false boolean props')
 
-  t.deepEqual(formEncodingToSchema({
+  obj = convertToSchema({
     firstName: 'Guy',
     lastName: 'Incognito',
     age: 20,
@@ -166,7 +157,8 @@ test('formEncodingToSchema - Person schema', async t => {
     dateOfBirth: '2022-06-22',
     rating: 1,
     committer: true,
-  }, Person), {
+  })
+  t.deepEqual(formEncodingToSchema(obj, Person), {
     firstName: 'Guy',
     lastName: 'Incognito',
     age: 20,
@@ -175,12 +167,6 @@ test('formEncodingToSchema - Person schema', async t => {
     dateOfBirth: '2022-06-22',
     rating: 1,
     committer: true,
-    address: {
-      city: '',
-      postalCode: '',
-      street: '',
-      streetnumber: '',
-    }
   }, 'true boolean props')
 
 })

@@ -13,11 +13,10 @@ export default function formEncodingToSchema (obj, schema) {
       obj[prop] = obj[prop] === 'on' || obj[prop] === true ? true : false
     }
     else if (type === 'object') {
-      obj[prop] = {}
-      Object.keys(schema.properties[prop]?.properties).forEach(innerProp => {
-        obj[prop][innerProp] = obj[innerProp] || ''
-        delete obj[innerProp]
-      })
+      let temp = formEncodingToSchema(obj[prop], schema.properties[prop])
+      if (temp) {
+        obj[prop] = temp
+      }
     }
   })
   return obj

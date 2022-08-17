@@ -1,9 +1,14 @@
 import { Validator } from 'jsonschema'
 import isJSON from './is-json.js'
 import formEncodingToSchema from './form-encoding-to-schema.js'
+import convertToSchema from './convert-to-schema.js'
 
 export default function validator (request, schema) {
-  const obj = isJSON(request) ? request.body : formEncodingToSchema(request.body, schema)
+  let data = request.body
+  if (isJSON(request)) {
+    let obj = convertToSchema(data)
+    data = formEncodingToSchema(obj, schema)
+  }
   const v = new Validator()
-  return v.validate(obj, schema)
+  return { res: v.validate(data, schema), data }
 }
