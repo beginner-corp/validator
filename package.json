@@ -1,6 +1,6 @@
 {
   "name": "@begin/validator",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Validate request bodies of JSON or x-url-form-encoded content-type",
   "main": "index.js",
   "type": "module",
