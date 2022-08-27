@@ -4,6 +4,7 @@ import formEncodingToSchema from '../src/form-encoding-to-schema.js'
 
 import Book from './schemas/book.js'
 import Person from './schemas/person.js'
+import DateTime from './schemas/date-time.js'
 
 test('formEncodingToSchema - Book schema', async t => {
   t.plan(4)
@@ -169,4 +170,52 @@ test('formEncodingToSchema - Person schema', async t => {
     committer: true,
   }, 'true boolean props')
 
+})
+
+
+test('formEncodingToSchema - DateTime schema', async t => {
+  t.plan(2)
+
+  let obj = convertToNestedObject({
+    date: '2022-09-02',
+    time: '10:00:00',
+    date_time: '2022-09-02T10:00:00'
+  })
+  t.deepEqual(formEncodingToSchema(obj, DateTime), {
+    date: '2022-09-02',
+    time: '10:00:00',
+    date_time: '2022-09-02T10:00:00'
+  }, 'all props correct')
+
+  obj = convertToNestedObject({
+    date: '2022-09-02',
+    time: '10:00',
+    date_time: '2022-09-02T10:00'
+  })
+  t.deepEqual(formEncodingToSchema(obj, DateTime), {
+    date: '2022-09-02',
+    time: '10:00:00',
+    date_time: '2022-09-02T10:00:00'
+  }, 'missing seconds')
+
+  /*
+  obj = convertToNestedObject({
+    title: 'Modern Software Engineering',
+    publication_date: '2021'
+  })
+  t.deepEqual(formEncodingToSchema(obj, Book), {
+    title: 'Modern Software Engineering',
+    publication_date: 2021
+  }, 'no author')
+
+  obj = convertToNestedObject({
+    title: 'Modern Software Engineering',
+    author: 'Dave Farley',
+    publication_date: ''
+  })
+  t.deepEqual(formEncodingToSchema(obj, Book), {
+    title: 'Modern Software Engineering',
+    author: 'Dave Farley'
+  }, 'integer is empty string')
+*/
 })

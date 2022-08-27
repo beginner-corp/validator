@@ -9,6 +9,13 @@ export default function formEncodingToSchema (obj, schema) {
         delete obj[prop]
       }
     }
+    else if (type === 'string') {
+      let format = schema.properties[prop]?.format
+      if ((format === 'time' || format === 'date-time')
+        && obj[prop].match(/:/g).length === 1) {
+        obj[prop] = `${obj[prop]}:00`
+      }
+    }
     else if (type === 'boolean') {
       obj[prop] = obj[prop] === 'on' || obj[prop] === true ? true : false
     }
