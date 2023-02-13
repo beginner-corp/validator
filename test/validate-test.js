@@ -2,6 +2,7 @@ import { test } from 'tape'
 import validator from '../src/validate.js'
 
 import Book from './schemas/book.js'
+import Person from './schemas/person.js'
 
 test('isValid', async t => {
   t.plan(2)
@@ -29,5 +30,96 @@ test('isValid', async t => {
     }
   }, Book)
   t.equal(result.valid, false, 'invalid input')
+
+})
+
+test('isValid with boolean', async t => {
+  t.plan(2)
+
+  let result = validator({
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: {
+      firstname: 'Dave',
+      lastname: 'Farley',
+      age: 50,
+      committer: true
+    }
+  }, Person)
+  t.equal(result.valid, true, 'valid JSON input')
+
+  result = validator({
+    headers: {
+      'Content-Type': 'application/x-url-form-encoding'
+    },
+    body: {
+      firstname: 'Dave',
+      lastname: 'Farley',
+      age: 50,
+      committer: true
+    }
+  }, Book)
+  t.equal(result.valid, true, 'valid URL encoded input')
+
+})
+
+test('isValid, FormData with checkbox', async t => {
+  t.plan(8)
+
+  let result = validator({
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: {
+      firstname: 'Dave',
+      lastname: 'Farley',
+      age: 50,
+      committer: 'on'
+    }
+  }, Person)
+  t.equal(result.valid, true, 'FormData with checkbox checked')
+  t.equal(result.data.committer, true, 'Checked checkbox is true')
+
+  result = validator({
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: {
+      firstname: 'Dave',
+      lastname: 'Farley',
+      age: 50,
+      committer: 'true'
+    }
+  }, Person)
+  t.equal(result.valid, true, 'FormData with checkbox set to string "true"')
+  t.equal(result.data.committer, false, 'Any string value not equal to "on" is false even if it is "true"')
+
+  result = validator({
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: {
+      firstname: 'Dave',
+      lastname: 'Farley',
+      age: 50,
+      committer: 'off'
+    }
+  }, Person)
+  t.equal(result.valid, true, 'FormData with checkbox unchecked')
+  t.equal(result.data.committer, false, 'Any string value not equal to "on" is false')
+
+  result = validator({
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: {
+      firstname: 'Dave',
+      lastname: 'Farley',
+      age: 50
+    }
+  }, Book)
+  t.equal(result.valid, true, 'FormData without checkbox')
+  t.equal(result.data.committer, undefined, 'No value is undefined')
 
 })

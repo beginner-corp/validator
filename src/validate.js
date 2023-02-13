@@ -12,6 +12,9 @@ export default function validator (request, schema) {
     let obj = convertToNestedObject(data)
     data = formEncodingToSchema(obj, schema)
   }
+  else {
+    data = formEncodingToSchema(data, schema)
+  }
 
   // Run validator
   const v = new Validator()
