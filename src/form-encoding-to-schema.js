@@ -20,9 +20,11 @@ export default function formEncodingToSchema (obj, schema) {
       obj[prop] = obj[prop] === 'on' || obj[prop] === true ? true : false
     }
     else if (type === 'object') {
-      let temp = formEncodingToSchema(obj[prop], schema.properties[prop])
-      if (temp) {
-        obj[prop] = temp
+      if (obj[prop]) {
+        let temp = formEncodingToSchema(obj[prop], schema.properties[prop])
+        if (temp) {
+          obj[prop] = temp
+        }
       }
     }
   })

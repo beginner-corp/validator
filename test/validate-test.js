@@ -123,3 +123,33 @@ test('isValid, FormData with checkbox', async t => {
   t.equal(result.data.committer, undefined, 'No value is undefined')
 
 })
+
+
+test('isValid, FormData with checkbox', async t => {
+  t.plan(6)
+
+  let result = validator({
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: {
+      firstname: 'Dave',
+      lastname: 'Farley',
+      age: 50,
+      committer: 'on',
+      'address.street': 'Piccadilly',
+      'address.streetnumber': '1',
+      'address.postalCode': 'L0D0N',
+      'address.city': 'London',
+      'address.permanent': 'on'
+    }
+  }, Person)
+
+  t.equal(result.valid, true, 'FormData with nested object is valid')
+  t.equal(result.data.address.street, 'Piccadilly', 'Nested object string is valid')
+  t.equal(result.data.address.streetnumber, 1, 'Nested object string is valid')
+  t.equal(result.data.address.postalCode, 'L0D0N', 'Nested object string is valid')
+  t.equal(result.data.address.city, 'London', 'Nested object string is valid')
+  t.equal(result.data.address.permanent, true, 'Nested object boolean is valid')
+
+})

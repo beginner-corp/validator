@@ -1,20 +1,14 @@
 import { Validator } from 'jsonschema'
-import isJSON from './is-json.js'
 import formEncodingToSchema from './form-encoding-to-schema.js'
 import convertToNestedObject from './convert-to-nested-object.js'
 
 export default function validator (request, schema) {
   let data = request.body
 
-  // If the request Content-Type !== application/json we need to convert from
-  // a list of properties to an object.
-  if (!isJSON(request)) {
-    let obj = convertToNestedObject(data)
-    data = formEncodingToSchema(obj, schema)
-  }
-  else {
-    data = formEncodingToSchema(data, schema)
-  }
+  // If the request Content-Type === url form encoded or json created via form data
+  // we need to convert from a list of properties to an object.
+  let obj = convertToNestedObject(data)
+  data = formEncodingToSchema(obj, schema)
 
   // Run validator
   const v = new Validator()

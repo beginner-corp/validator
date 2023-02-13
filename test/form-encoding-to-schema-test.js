@@ -103,7 +103,8 @@ test('formEncodingToSchema - Person schema', async t => {
       city: 'Nowhere',
       postalCode: '90210',
       street: 'Bayside Cres.',
-      streetnumber: '70',
+      streetnumber: 70,
+      permanent: false,
     }
   }, 'sub object strings')
 
