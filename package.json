@@ -26,11 +26,13 @@
   },
   "homepage": "https://github.com/beginner-corp/validator#readme",
   "dependencies": {
-    "jsonschema": "^1.4.1"
+    "jsonschema": "^1.4.1",
+    "parse-nested-form-data": "^1.0.0"
   },
   "devDependencies": {
     "@architect/eslint-config": "^2.0.1",
     "eslint": "^8.18.0",
+    "formdata-node": "^5.0.0",
     "tap-arc": "^0.3.4",
     "tape": "^5.5.3"
   },

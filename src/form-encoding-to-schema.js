@@ -1,9 +1,17 @@
 export default function formEncodingToSchema (obj, schema) {
   Object.keys(schema.properties).forEach(prop => {
     let type = schema.properties[prop]?.type
-    if (type === 'integer' || type === 'number') {
+    if (type === 'integer') {
       if (obj[prop]) {
         obj[prop] = parseInt(obj[prop])
+      }
+      else {
+        delete obj[prop]
+      }
+    }
+    else if (type === 'number') {
+      if (obj[prop]) {
+        obj[prop] = parseFloat(obj[prop])
       }
       else {
         delete obj[prop]
