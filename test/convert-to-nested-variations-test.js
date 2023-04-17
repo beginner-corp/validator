@@ -88,19 +88,16 @@ test('Normalizing a complex form', async t => {
 
 
 test('dup keys with array label in object', async t => {
-// test('dup keys with array label in object', async t => {
   t.plan(1)
 
   const formValues = {
     'zoo[]': [ 'one', 'two', 'three' ],
-    // 'foo[].bar[1]': [ '1', '2', '3' ],
     'goo[1].bar[]': [ '1', '2', '3' ],
 
   }
 
   const javascriptObject = {
     zoo: [ 'one', 'two', 'three' ],
-    // foo: [ { bar: [ '1' ] }, { bar: [ '2' ] }, { bar: [ '3' ] } ],
     goo: [ { bar: [ '1', '2', '3' ] } ],
   }
   const resultFromObject = convertToNestedObject(formValues)
@@ -148,7 +145,6 @@ test('dup keys in object', async t => {
   t.deepEqual(resultFromObject, javascriptObject, 'dup keys in object' )
 })
 
-// test.only('dup keys in iterable FormData', async t => {
 test('dup keys in iterable FormData', async t => {
   t.plan(1)
 
