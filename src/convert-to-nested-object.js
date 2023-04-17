@@ -21,7 +21,6 @@ function isJsonObject (val) {
   )
 }
 
-
 // removes trailing [] for objects where the array is already constructed
 function fixArrayNotationForPlainObjects (entry, isIterable){
   if (Array.isArray(entry.value) && /\[]$/.test(entry.path) && !isIterable) {
@@ -38,7 +37,6 @@ function allowDuplicatesInIterables (entry, isIterable, keys){
   }
   return entry
 }
-
 
 function extractPathParts (path) {
   const re = /((\d*)\]|([^.[]+))([\[\.]|$)/g

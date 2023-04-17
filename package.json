@@ -26,8 +26,7 @@
   },
   "homepage": "https://github.com/beginner-corp/validator#readme",
   "dependencies": {
-    "jsonschema": "^1.4.1",
-    "parse-nested-form-data": "^1.0.0"
+    "jsonschema": "^1.4.1"
   },
   "devDependencies": {
     "@architect/eslint-config": "^2.0.1",
