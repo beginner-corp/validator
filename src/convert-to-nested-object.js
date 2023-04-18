@@ -29,7 +29,7 @@ function fixArrayNotationForPlainObjects (entry, isIterable){
   return entry
 }
 
-// for iterable objects like FormData this adds the [] inticator at the end of duplicate key
+// for iterable objects like FormData this adds the [] indicator at the end of duplicate key
 function allowDuplicatesInIterables (entry, isIterable, keys){
   const key = keys.find(k => k === entry.path)
   if (key && isIterable){
@@ -95,7 +95,6 @@ function handlePathPart (
 
 export default function parseFormData ( formData, { removeEmptyString = false, transformEntry = false, duplicateKeys = [] } = {}){
   let result = {}
-  // let flatten = [ 'zoo' ]
 
   // all arrays we need to squash (in place) later
   const arraysWithOrder = new Set()
