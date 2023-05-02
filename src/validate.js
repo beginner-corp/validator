@@ -15,7 +15,7 @@ export default function validator (request, schema) {
   const res = v.validate(data, schema)
 
   // Convert error list into problems object
-  let problems = {}
+  let problems = []
   if (!res.valid) {
     res.errors.forEach(e => {
       let key = e.property === 'instance' ? e.argument : e.property.replace(/instance./, '')
