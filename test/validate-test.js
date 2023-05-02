@@ -30,6 +30,24 @@ test('isValid', async t => {
     }
   }, Book)
   t.equal(result.valid, false, 'invalid input')
+})
+
+test('problems given', async t => {
+  t.plan(1)
+  let result = validator({
+    headers: {
+      'Content-Type': 'application/x-url-form-encoding'
+    },
+    body: {
+      title: 'Modern Software Engineering',
+      author: 'Dave Farley',
+      publication_date: 'not a year'
+    }
+  }, Book)
+  const problems = {
+    publication_date: { errors: [ 'is not of a type(s) integer' ] }
+  }
+  t.deepEquals(result?.problems, problems, 'problems given')
 
 })
 
