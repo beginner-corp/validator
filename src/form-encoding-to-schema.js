@@ -20,7 +20,7 @@ export default function formEncodingToSchema (obj, schema) {
     else if (type === 'string') {
       let format = schema.properties[prop]?.format
       if ((format === 'time' || format === 'date-time')
-        && obj[prop].match(/:/g).length === 1) {
+      && obj[prop] && obj[prop].match(/:/g).length === 1) {
         obj[prop] = `${obj[prop]}:00`
       }
     }

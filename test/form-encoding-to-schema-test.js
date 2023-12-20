@@ -175,7 +175,7 @@ test('formEncodingToSchema - Person schema', async t => {
 
 
 test('formEncodingToSchema - DateTime schema', async t => {
-  t.plan(2)
+  t.plan(3)
 
   let obj = convertToNestedObject({
     date: '2022-09-02',
@@ -198,6 +198,16 @@ test('formEncodingToSchema - DateTime schema', async t => {
     time: '10:00:00',
     date_time: '2022-09-02T10:00:00'
   }, 'missing seconds')
+
+
+  obj = convertToNestedObject({
+    date: '2022-09-02',
+    time: '10:00'
+  })
+  t.deepEqual(formEncodingToSchema(obj, DateTime), {
+    date: '2022-09-02',
+    time: '10:00:00'
+  }, 'no date-time')
 
   /*
   obj = convertToNestedObject({
